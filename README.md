@@ -1,6 +1,6 @@
 # SeamlessDB
 
-SeamlessDB is a cloud-native database prototype for academic purposes, supporting the separation of computation, state, and storage into three layers.
+SeamlessDB is a cloud-native database prototype designed for academic research, featuring efficient transaction breakpoint resumption within a compute-state-storage three-tier architecture.
 
 We implemente our designs mentioned in the paper(SeamlessDB: Efficient Failover Handling in Cloud-native Databases with Breakpoint Resumption) based on this system.
 
