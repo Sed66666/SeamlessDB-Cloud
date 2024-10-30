@@ -1,0 +1,14 @@
+{
+    "state_node": {
+        "node_id": 0,
+        "local_port": 12193,
+        "txn_list_size_MB": 300,
+        "log_buf_size_GB": 1,
+        "lock_buf_size_GB": 1,
+        "sql_buf_size_MB": 300,
+        "plan_buf_size_GB": 1,
+        "cursor_buf_size_GB": 1,
+        "join_plan_buf_size_GB": 2,
+        "join_block_buf_size_GB": 5
+    }
+}

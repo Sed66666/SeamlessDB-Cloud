@@ -1,0 +1,10 @@
+{
+    "storage_node": {
+        "machine_num": 1,
+        "machine_id": 0,
+        "local_rpc_port": 12190,
+        "workload": "tpch",
+        "record_num": 1,
+        "buffer_pool_size": 1310720
+    }
+}
