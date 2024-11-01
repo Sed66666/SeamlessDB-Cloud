@@ -2,7 +2,7 @@
 
 SeamlessDB is a cloud-native database prototype designed for academic research, featuring efficient transaction breakpoint resumption within a compute-state-storage three-tier architecture.
 
-We implemente our designs mentioned in the paper(SeamlessDB: Efficient Failover Handling in Cloud-native Databases with Breakpoint Resumption) based on this system.
+We implement our designs mentioned in the paper (SeamlessDB: a Cloud-Native Database for Resilient Failover with Breakpoint Resumption) based on this system.
 
 ## Pre-requisites to Build
 - Compiler: g++ 11.4.0
@@ -46,7 +46,7 @@ cd seamless_client
 ```
 
 ## How to run experiments
-We use scripts to run experiments. Before run experiments, you have to make sure that the storage pool, state pool and rw server have been launched.
+We use scripts to run experiments. Before running experiments, you have to make sure that the storage pool, state pool, and rw server have been launched.
 
 ```bash
 ./bin/storage_pool
