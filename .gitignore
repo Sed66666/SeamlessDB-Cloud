@@ -21,6 +21,7 @@ __pycache__/
 *_backup/
 
 # tmp
+.cache/
 /tmp/
 /src/parser/build/
 *.zip

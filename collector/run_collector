@@ -1,0 +1,1 @@
+/root/opentelemetry-collector/bin/otelcorecol_* --config /root/SeamlessDB-Cloud/collector/otel-config.yaml
