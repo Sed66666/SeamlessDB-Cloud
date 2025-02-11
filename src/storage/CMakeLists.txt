@@ -8,7 +8,7 @@ set(SOURCES
         storage_service.pb.cc
 )
 add_library(storage STATIC ${SOURCES})
-target_link_libraries(storage ${BRPC_LIB} ${DYNAMIC_LIB})
+target_link_libraries(storage ${BRPC_LIB} ${DYNAMIC_LIB} ${OPENTELEMETRY_CPP_LIBRARIES})
 
 # add_executable(test_storage test_storage.cpp)
 # target_link_libraries(test_storage storage)

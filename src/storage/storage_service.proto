@@ -48,7 +48,7 @@ message GetPersistLsnResponse {
 
 service StorageService {
     rpc LogWrite(LogWriteRequest) returns (LogWriteResponse);
-    rpc GetOldPage(GetOldPageRequest) returns (GetOldPageResponse);
+    rpc GetOldPage(GetOldPageRequest) returns (GetOldPageResponse);  //没有用？？
     rpc GetLatestPage(GetLatestPageRequest) returns (GetLatestPageResponse);
     rpc GetPersistLsn(GetPersistLsnRequest) returns (GetPersistLsnResponse);
 };

@@ -14,6 +14,7 @@
 #include "rw_server.h"
 #include "state/resume_util.h"
 #include "state/state_item/op_state.h"
+#include "storage/buffer_pool_manager.h"
 #include "storage/storage_service.pb.h"
 #include "util/json_util.h"
 
@@ -681,47 +682,31 @@ void client_handler(int *sock_fd, RWNode *node) {
 #ifdef TIME_OPEN
           auto run_sql_start = std::chrono::high_resolution_clock::now();
 #endif
-          auto span = tracer->StartSpan("compute_node");
-          //   trace_api::Scope scope(span); // parent_span 现在是 Active Span
+          auto root_span = tracer->StartSpan("compute_node");
+          trace_api::Scope scope(root_span); // parent_span 现在是 Active Span
+          trace_api::StartSpanOptions options;
+          auto root_context = root_span->GetContext();
+          node->buffer_pool_mgr_->set_span_context(&root_context);
 
-          // #ifdef TIME_OPEN
-          // auto analyze_start = std::chrono::high_resolution_clock::now();
-          // #endif
           // analyze and rewrite
+          auto analyze_span = tracer->StartSpan("analyze", options);
           std::shared_ptr<Query> query =
               node->analyze_->do_analyze(ast::parse_tree);
           yy_delete_buffer(buf, scanner);
           finish_analyze = true;
-
-          span->End();
-          // pthread_mutex_unlock(node->buffer_mutex);
-          // #ifdef TIME_OPEN
-          // auto analyze_end = std::chrono::high_resolution_clock::now();
-          // auto analyze_duration =
-          // std::chrono::duration_cast<std::chrono::microseconds>(analyze_end -
-          // analyze_start).count(); std::cout << "time for analyze and rewrite:
-          // " << analyze_duration << "\n";
-          // RwServerDebug::getInstance()->DEBUG_PRINT("[time for analyze and
-          // rewrite: " + std::to_string(analyze_duration) + "]"); #endif
+          analyze_span->End();
 
           // 优化器
-          // #ifdef TIME_OPEN
-          // auto optimize_start = std::chrono::high_resolution_clock::now();
-          // #endif
+
           /*
               设置planner的sql_id，并启动plan_query
           */
+          auto optimizer_span = tracer->StartSpan("optimizer", options);
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
-          // #ifdef TIME_OPEN
-          // auto optimize_end = std::chrono::high_resolution_clock::now();
-          // auto optimize_duration =
-          // std::chrono::duration_cast<std::chrono::microseconds>(optimize_end
-          // - optimize_start).count(); std::cout << "time for optimization: "
-          // << optimize_duration << "\n";
-          // RwServerDebug::getInstance()->DEBUG_PRINT("[time for optimization:
-          // " + std::to_string(optimize_duration) + "]"); #endif
+          optimizer_span->End();
+
           // @STATE: write plan into state_node
           if (state_open_) {
             context->op_state_mgr_->write_plan_to_state(sql_id, node->sm_mgr_,
@@ -729,50 +714,20 @@ void client_handler(int *sock_fd, RWNode *node) {
           }
 
           // portal
-          // #ifdef TIME_OPEN
-          // auto start_start = std::chrono::high_resolution_clock::now();
-          // #endif
+          auto portal_span = tracer->StartSpan("portal", options);
           std::shared_ptr<PortalStmt> portalStmt =
               node->portal_->start(plan, context);
           if (portalStmt->root != nullptr)
             CompCkptManager::get_instance()->add_new_query_tree(
                 portalStmt->root);
-          // #ifdef TIME_OPEN
-          // auto start_end = std::chrono::high_resolution_clock::now();
-          // auto start_duration =
-          // std::chrono::duration_cast<std::chrono::microseconds>(start_end -
-          // start_start).count(); std::cout << "time for portal_start: " <<
-          // start_duration << "\n";
-          // RwServerDebug::getInstance()->DEBUG_PRINT("[time for portal_start:
-          // " + std::to_string(start_duration) + "]"); #endif
+          portal_span->End();
 
-          // #ifdef TIME_OPEN
-          // auto run_start = std::chrono::high_resolution_clock::now();
-          // #endif
-          // std::cout << "before run sql: " << data_recv << "\n";
+          auto exector_span = tracer->StartSpan("exector", options);
           node->portal_->run(portalStmt, node->ql_mgr_, context);
-          // std::cout << "after run sql: " << data_recv << "\n";
-          //  #ifdef TIME_OPEN
-          // auto run_end = std::chrono::high_resolution_clock::now();
-          // auto run_duration =
-          // std::chrono::duration_cast<std::chrono::microseconds>(run_end -
-          // run_start).count(); std::cout << "time for portal_run: " <<
-          // run_duration << "\n";
-          // RwServerDebug::getInstance()->DEBUG_PRINT("[time for portal_run: "
-          // + std::to_string(run_duration) + "]"); #endif
-
-#ifdef TIME_OPEN
-          auto run_sql_end = std::chrono::high_resolution_clock::now();
-          auto run_sql_total =
-              std::chrono::duration_cast<std::chrono::microseconds>(
-                  run_sql_end - run_sql_start)
-                  .count();
-          std::cout << "time for run sql: " << run_sql_total << "\n";
-          RwServerDebug::getInstance()->DEBUG_PRINT(
-              "[time for run sql: " + std::to_string(run_sql_total) + "]");
-#endif
+          exector_span->End();
 
           node->portal_->drop();
+          root_span->End();
         } catch (TransactionAbortException &e) {
           // 事务需要回滚，需要把abort信息返回给客户端并写入output.txt文件中
           std::string str = "abort\n";

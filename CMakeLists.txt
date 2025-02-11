@@ -86,6 +86,14 @@ if ((NOT RDMA_INCLUDE_PATH) OR (NOT RDMA_LIB))
     message(FATAL_ERROR "Fail to find ibverbs")
 endif()
 
+set(opentelemetry-cpp_DIR otel-cpp/lib/cmake/opentelemetry-cpp)
+find_package(CURL)
+find_package(nlohmann_json)
+# Use find_package to include OpenTelemetry C++
+find_package(opentelemetry-cpp CONFIG REQUIRED NO_DEFAULT_PATH)
+message(STATUS "OpenTelemetry Include Dirs: ${OPENTELEMETRY_CPP_INCLUDE_DIRS}")
+include_directories(${OPENTELEMETRY_CPP_INCLUDE_DIRS})
+
 set(DYNAMIC_LIB
     ${CMAKE_THREAD_LIBS_INIT}
     ${GFLAGS_LIBRARY}
