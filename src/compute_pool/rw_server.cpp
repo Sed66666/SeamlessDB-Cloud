@@ -21,7 +21,7 @@
 #include "debug_log.h"
 
 #include "opentelemetry/exporters/otlp/otlp_http_exporter_factory.h"
-#include "opentelemetry/sdk/trace/simple_processor_factory.h"
+#include "opentelemetry/sdk/trace/batch_span_processor_factory.h"
 #include "opentelemetry/sdk/trace/tracer_provider_factory.h"
 #include "opentelemetry/trace/provider.h"
 #include <opentelemetry/trace/span_context.h>
@@ -331,8 +331,8 @@ void client_handler(int *sock_fd, RWNode *node) {
   };
   auto resource = trace_resource::Resource::Create(attributes);
   auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
-  auto processor =
-      trace_sdk::SimpleSpanProcessorFactory::Create(std::move(exporter));
+  auto processor = trace_sdk::BatchSpanProcessorFactory::Create(
+      std::move(exporter), trace_sdk::BatchSpanProcessorOptions());
   std::shared_ptr<trace_api::TracerProvider> provider =
       trace_sdk::TracerProviderFactory::Create(std::move(processor), resource);
   // set the global trace provider
@@ -683,13 +683,12 @@ void client_handler(int *sock_fd, RWNode *node) {
           auto run_sql_start = std::chrono::high_resolution_clock::now();
 #endif
           auto root_span = tracer->StartSpan("compute_node");
-          trace_api::Scope scope(root_span); // parent_span 现在是 Active Span
-          trace_api::StartSpanOptions options;
-          auto root_context = root_span->GetContext();
-          node->buffer_pool_mgr_->set_span_context(&root_context);
+          trace_api::Scope scope1(root_span); // parent_span 现在是 Active Span
+          // trace_api::StartSpanOptions options;
 
           // analyze and rewrite
-          auto analyze_span = tracer->StartSpan("analyze", options);
+          // auto analyze_span = tracer->StartSpan("analyze", options);
+          auto analyze_span = tracer->StartSpan("analyze");
           std::shared_ptr<Query> query =
               node->analyze_->do_analyze(ast::parse_tree);
           yy_delete_buffer(buf, scanner);
@@ -701,10 +700,18 @@ void client_handler(int *sock_fd, RWNode *node) {
           /*
               设置planner的sql_id，并启动plan_query
           */
-          auto optimizer_span = tracer->StartSpan("optimizer", options);
+          // auto optimizer_span = tracer->StartSpan("optimizer", options);
+          auto optimizer_span = tracer->StartSpan("optimizer");
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
+
+          std::ostringstream buffer;
+          std::streambuf *oldCout =
+              std::cout.rdbuf(buffer.rdbuf()); // 重定向 std::cout
+          plan->format_print();
+          std::cout.rdbuf(oldCout); // 还原 std::cout
+          optimizer_span->AddEvent("plan", {{"plan", buffer.str()}});
           optimizer_span->End();
 
           // @STATE: write plan into state_node
@@ -714,7 +721,8 @@ void client_handler(int *sock_fd, RWNode *node) {
           }
 
           // portal
-          auto portal_span = tracer->StartSpan("portal", options);
+          // auto portal_span = tracer->StartSpan("portal", options);
+          auto portal_span = tracer->StartSpan("portal");
           std::shared_ptr<PortalStmt> portalStmt =
               node->portal_->start(plan, context);
           if (portalStmt->root != nullptr)
@@ -722,7 +730,9 @@ void client_handler(int *sock_fd, RWNode *node) {
                 portalStmt->root);
           portal_span->End();
 
-          auto exector_span = tracer->StartSpan("exector", options);
+          // auto exector_span = tracer->StartSpan("exector", options);
+          auto exector_span = tracer->StartSpan("exector");
+          trace_api::Scope scope2(exector_span);
           node->portal_->run(portalStmt, node->ql_mgr_, context);
           exector_span->End();
 

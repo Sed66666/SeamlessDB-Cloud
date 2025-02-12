@@ -8,5 +8,5 @@ sleep 5
 ./bin/state_pool &
 sleep 4
 ./bin/rw_server active rw &
-sleep 4
+sleep 5
 /root/SeamlessDB-Cloud/seamless_client/build/seamless_client

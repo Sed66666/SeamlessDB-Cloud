@@ -30,7 +30,8 @@ private:
   brpc::Channel *page_channel_;
   SliceMetaManager *slice_mgr_;
   NodeType node_type_;
-  opentelemetry::trace::SpanContext *span_context_;
+  const char *FETCH_FROM_REMOTE = "fetch from remote";
+  const char *PAGE_ID = "page_id";
 
 public:
   BufferPool(NodeType node_type, size_t pool_size, brpc::Channel *page_channel,
@@ -92,10 +93,6 @@ public:
               << ", Unpin size: " << replacer_->Size() << std::endl;
   }
 
-  void set_span_context(opentelemetry::trace::SpanContext *span_context) {
-    span_context_ = span_context;
-  }
-
 private:
   bool find_victim_page(frame_id_t *frame_id);
 
@@ -153,12 +150,6 @@ public:
   void print_buffer_info() {
     for (int i = 0; i < BUFFER_POOL_NUM; ++i) {
       buffer_pools_[i]->print_buffer_info();
-    }
-  }
-
-  void set_span_context(opentelemetry::trace::SpanContext *span_context) {
-    for (size_t i = 0; i < BUFFER_POOL_NUM; ++i) {
-      buffer_pools_[i]->set_span_context(span_context);
     }
   }
 
