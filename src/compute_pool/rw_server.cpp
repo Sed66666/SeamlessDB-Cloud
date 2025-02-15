@@ -1,10 +1,12 @@
 #include <chrono>
 #include <cstdio>
 #include <netinet/in.h>
+#include <pthread.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <setjmp.h>
 #include <signal.h>
+#include <string>
 #include <unistd.h>
 
 #include "common/macro.h"
@@ -43,6 +45,7 @@ DEFINE_int32(interval_ms, 10, "Milliseconds between consecutive requests");
 // #define TIME_OPEN 0
 
 int state_open_ = 0;
+bool use_proxy_;
 double state_theta_ = -1.0;
 double src_scale_factor_ = 1000.0;
 int block_size_ = 500;
@@ -323,22 +326,7 @@ void replay_log_for_resumption(SmManager *sm_mgr) {
   }
 }
 
-void client_handler(int *sock_fd, RWNode *node) {
-
-  // 设置 `service.name`
-  trace_resource::ResourceAttributes attributes = {
-      {"service.name", "seamlessdb"} // 指定 Jaeger 显示的 Service Name
-  };
-  auto resource = trace_resource::Resource::Create(attributes);
-  auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
-  auto processor = trace_sdk::BatchSpanProcessorFactory::Create(
-      std::move(exporter), trace_sdk::BatchSpanProcessorOptions());
-  std::shared_ptr<trace_api::TracerProvider> provider =
-      trace_sdk::TracerProviderFactory::Create(std::move(processor), resource);
-  // set the global trace provider
-  trace_api::Provider::SetTracerProvider(provider);
-  auto tracer =
-      trace_api::Provider::GetTracerProvider()->GetTracer("my-app-tracer");
+void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 
   /*
       sql_id
@@ -382,6 +370,20 @@ void client_handler(int *sock_fd, RWNode *node) {
   const char *send_ok = "Set connection id successfully.\n";
   memcpy(data_send, send_ok, strlen(send_ok));
   write(fd, data_send, strlen(send_ok));
+
+  pthread_setname_np(pthread_self(), std::to_string(thread_id).c_str());
+  trace_resource::ResourceAttributes attributes = {
+      {"service.name", "seamlessdb"}, {"thread.id", thread_id}};
+  auto resource = trace_resource::Resource::Create(attributes);
+  auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
+  auto processor = trace_sdk::BatchSpanProcessorFactory::Create(
+      std::move(exporter), trace_sdk::BatchSpanProcessorOptions());
+  std::shared_ptr<trace_api::TracerProvider> provider =
+      trace_sdk::TracerProviderFactory::Create(std::move(processor), resource);
+  // set the global trace provider
+  trace_api::Provider::SetTracerProvider(provider);
+  auto tracer =
+      trace_api::Provider::GetTracerProvider()->GetTracer("my-app-tracer");
 
   yyscan_t scanner;
   if (yylex_init(&scanner)) {
@@ -705,13 +707,7 @@ void client_handler(int *sock_fd, RWNode *node) {
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
-
-          std::ostringstream buffer;
-          std::streambuf *oldCout =
-              std::cout.rdbuf(buffer.rdbuf()); // 重定向 std::cout
-          plan->format_print();
-          std::cout.rdbuf(oldCout); // 还原 std::cout
-          optimizer_span->AddEvent("plan", {{"plan", buffer.str()}});
+          plan->format_collect("", optimizer_span);
           optimizer_span->End();
 
           // @STATE: write plan into state_node
@@ -886,7 +882,7 @@ void RWNode::start_server() {
     //     std::cout << "Create thread fail!" << std::endl;
     //     break;  // break while loop
     // }
-    threads.push_back(std::thread(client_handler, &sockfd, this));
+    threads.push_back(std::thread(client_handler, &sockfd, this, i));
   }
 
   for (auto &t : threads) {
@@ -979,6 +975,7 @@ int main(int argc, char **argv) {
   int record_num = cJSON_GetObjectItem(node, "record_num")->valueint;
   int thread_num = cJSON_GetObjectItem(node, "thread_num")->valueint;
   state_open_ = cJSON_GetObjectItem(node, "state_open")->valueint;
+  use_proxy_ = cJSON_GetObjectItem(node, "use_proxy")->valueint;
   block_size_ = cJSON_GetObjectItem(node, "block_size")->valueint;
   state_theta_ = cJSON_GetObjectItem(node, "state_theta")->valuedouble;
   src_scale_factor_ =

@@ -8,6 +8,7 @@
         "record_num": 32,
         "state_open": 1,
         "state_theta": 0.9,
+        "use_proxy": false,
         "buffer_pool_size": 1310720,
         "src_scale_factor": 1.0,
         "block_size": 500,
@@ -36,10 +37,12 @@
     },
     "remote_state_nodes": {
         "remote_ips": [
-            "10.77.110.144","10.77.110.147"
+            "10.77.110.144",
+            "10.77.110.147"
         ],
         "remote_ports": [
-            12193,12193
+            12193,
+            12193
         ],
         "txn_list_size_GB": 1,
         "log_buf_size_GB": 1,
