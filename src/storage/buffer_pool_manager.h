@@ -1,5 +1,7 @@
 #pragma once
 #include <fcntl.h>
+#include <opentelemetry/trace/span_metadata.h>
+#include <opentelemetry/trace/span_startoptions.h>
 #include <unistd.h>
 
 #include <brpc/channel.h>
@@ -32,6 +34,8 @@ private:
   NodeType node_type_;
   const char *FETCH_FROM_REMOTE = "fetch from remote";
   const char *PAGE_ID = "page_id";
+  opentelemetry::trace::StartSpanOptions op =
+      opentelemetry::trace::StartSpanOptions();
 
 public:
   BufferPool(NodeType node_type, size_t pool_size, brpc::Channel *page_channel,
@@ -55,6 +59,8 @@ public:
       free_list_.emplace_back(
           static_cast<frame_id_t>(i)); // static_cast转换数据类型
     }
+
+    op.kind = opentelemetry::trace::SpanKind::kServer;
   }
 
   ~BufferPool() {

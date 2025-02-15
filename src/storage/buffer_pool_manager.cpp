@@ -3,6 +3,8 @@
 #include "opentelemetry/trace/provider.h"
 #include "storage/storage_service.pb.h"
 #include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <opentelemetry/trace/span_metadata.h>
+#include <opentelemetry/trace/span_startoptions.h>
 
 namespace trace_api = opentelemetry::trace;
 
@@ -102,7 +104,7 @@ void BufferPool::fetch_page_from_rpc(Page *page, PageId page_id,
   request.add_latest_lsn(slice_mgr_->get_latest_lsn(
       SliceId(page_id.table_id, page_id.page_no / SLICE_NUM)));
 
-  auto span = tracer->StartSpan(FETCH_FROM_REMOTE);
+  auto span = tracer->StartSpan(FETCH_FROM_REMOTE, op);
   // tracer->GetCurrentSpan()->AddEvent(FETCH_FROM_REMOTE,
   //                                    {{PAGE_ID, page_id.page_no}});
   stub.GetLatestPage(cntl, &request, response, NULL);

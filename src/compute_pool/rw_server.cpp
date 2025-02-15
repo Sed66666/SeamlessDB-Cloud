@@ -423,6 +423,8 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     i_recvBytes = read(fd, data_recv, BUFFER_LENGTH);
 
     // std::cout << "data_recv: " << data_recv << "\n";
+    auto root_span = tracer->StartSpan("compute_node");
+    trace_api::Scope scope1(root_span); // parent_span 现在是 Active Span
 
     if (i_recvBytes == 0) {
       std::cout << "Maybe the client has closed" << std::endl;
@@ -664,7 +666,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     // std::cout << "Read from client " << fd << ": " << data_recv << std::endl;
     RwServerDebug::getInstance()->DEBUG_RECEIVE_SQL(fd, data_recv);
 #endif
-
+    root_span->AddEvent("RECEIVE_SQL", {{"SQL", data_recv}});
     memset(data_send, '\0', BUFFER_LENGTH);
     offset = 0;
 
@@ -684,12 +686,8 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 #ifdef TIME_OPEN
           auto run_sql_start = std::chrono::high_resolution_clock::now();
 #endif
-          auto root_span = tracer->StartSpan("compute_node");
-          trace_api::Scope scope1(root_span); // parent_span 现在是 Active Span
-          // trace_api::StartSpanOptions options;
 
           // analyze and rewrite
-          // auto analyze_span = tracer->StartSpan("analyze", options);
           auto analyze_span = tracer->StartSpan("analyze");
           std::shared_ptr<Query> query =
               node->analyze_->do_analyze(ast::parse_tree);
@@ -702,11 +700,12 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           /*
               设置planner的sql_id，并启动plan_query
           */
-          // auto optimizer_span = tracer->StartSpan("optimizer", options);
           auto optimizer_span = tracer->StartSpan("optimizer");
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
+          root_span->SetAttribute("Type",
+                                  node->sql_type_[context->plan_tag_ - 1]);
           plan->format_collect("", optimizer_span);
           optimizer_span->End();
 
@@ -717,23 +716,21 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           }
 
           // portal
-          // auto portal_span = tracer->StartSpan("portal", options);
           auto portal_span = tracer->StartSpan("portal");
           std::shared_ptr<PortalStmt> portalStmt =
               node->portal_->start(plan, context);
-          if (portalStmt->root != nullptr)
-            CompCkptManager::get_instance()->add_new_query_tree(
-                portalStmt->root);
+          // if (portalStmt->root != nullptr)
+          //   CompCkptManager::get_instance()->add_new_query_tree(
+          //       portalStmt->root);
           portal_span->End();
 
-          // auto exector_span = tracer->StartSpan("exector", options);
           auto exector_span = tracer->StartSpan("exector");
           trace_api::Scope scope2(exector_span);
           node->portal_->run(portalStmt, node->ql_mgr_, context);
           exector_span->End();
 
           node->portal_->drop();
-          root_span->End();
+
         } catch (TransactionAbortException &e) {
           // 事务需要回滚，需要把abort信息返回给客户端并写入output.txt文件中
           std::string str = "abort\n";
@@ -805,6 +802,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     //     node->txn_mgr_->commit(context->txn_, context);
     //     commit_txns[connection_id] ++;
     // }
+    root_span->End();
   }
 
   std::shared_ptr<opentelemetry::trace::TracerProvider> none;

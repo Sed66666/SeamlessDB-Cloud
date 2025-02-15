@@ -1,8 +1,8 @@
 {
     "rw_node": {
-        "ip": "10.77.110.145",
+        "ip": "127.0.0.1",
         "port": 12191,
-        "thread_num": 16,
+        "thread_num": 1,
         "workload": "tpcc",
         "record_num": 32,
         "resumption_open": 1
