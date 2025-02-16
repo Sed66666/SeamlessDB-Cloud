@@ -1,0 +1,1 @@
+/root/SeamlessDB-Cloud/seamless_client/build/seamless_client

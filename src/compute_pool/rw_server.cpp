@@ -1,6 +1,9 @@
 #include <chrono>
 #include <cstdio>
+#include <memory>
 #include <netinet/in.h>
+#include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/trace/span.h>
 #include <pthread.h>
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -416,6 +419,9 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
                   op_state_manager, qp_mgr, data_send, &offset, rdma_allocated);
   context->rdma_buffer_allocator_ = rdma_buffer_allocator;
 
+  opentelemetry::nostd::shared_ptr<Span> transaction_span;
+  opentelemetry::nostd::shared_ptr<Scope> transaction_scope;
+
   while (true) {
     // std::cout << "Waiting for request..." << std::endl;
     memset(data_recv, 0, BUFFER_LENGTH);
@@ -423,8 +429,6 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     i_recvBytes = read(fd, data_recv, BUFFER_LENGTH);
 
     // std::cout << "data_recv: " << data_recv << "\n";
-    auto root_span = tracer->StartSpan("compute_node");
-    trace_api::Scope scope1(root_span); // parent_span 现在是 Active Span
 
     if (i_recvBytes == 0) {
       std::cout << "Maybe the client has closed" << std::endl;
@@ -666,7 +670,15 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     // std::cout << "Read from client " << fd << ": " << data_recv << std::endl;
     RwServerDebug::getInstance()->DEBUG_RECEIVE_SQL(fd, data_recv);
 #endif
-    root_span->AddEvent("RECEIVE_SQL", {{"SQL", data_recv}});
+
+    if (strcmp(data_recv, "begin;") == 0) {
+      transaction_span = tracer->StartSpan("begin transaction");
+      transaction_scope = std::make_shared<Scope>(Scope(transaction_span));
+    }
+
+    auto sql_span = tracer->StartSpan("SQL");
+    Scope sql_scope(sql_span);
+    sql_span->AddEvent("RECEIVE_SQL", {{"SQL", data_recv}});
     memset(data_send, '\0', BUFFER_LENGTH);
     offset = 0;
 
@@ -704,8 +716,8 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
-          root_span->SetAttribute("Type",
-                                  node->sql_type_[context->plan_tag_ - 1]);
+          sql_span->SetAttribute("Type",
+                                 node->sql_type_[context->plan_tag_ - 1]);
           plan->format_collect("", optimizer_span);
           optimizer_span->End();
 
@@ -725,7 +737,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           portal_span->End();
 
           auto exector_span = tracer->StartSpan("exector");
-          trace_api::Scope scope2(exector_span);
+          trace_api::Scope exector_scope(exector_span);
           node->portal_->run(portalStmt, node->ql_mgr_, context);
           exector_span->End();
 
@@ -788,11 +800,16 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
       yy_delete_buffer(buf, scanner);
       // pthread_mutex_unlock(node->buffer_mutex);
     }
+
+    sql_span->End();
+    if (strcmp(data_recv, "commit;") == 0) {
+      commit_txns[connection_id]++;
+      transaction_span->End();
+      transaction_scope = nullptr;
+    }
+
     // future TODO: 格式化 sql_handler.result, 传给客户端
     // send result with fixed format, use protobuf in the future
-    if (strcmp(data_recv, "commit;") == 0)
-      commit_txns[connection_id]++;
-
     if (write(fd, data_send, offset + 1) == -1) {
       break;
     }
@@ -802,7 +819,6 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     //     node->txn_mgr_->commit(context->txn_, context);
     //     commit_txns[connection_id] ++;
     // }
-    root_span->End();
   }
 
   std::shared_ptr<opentelemetry::trace::TracerProvider> none;
