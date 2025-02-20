@@ -92,10 +92,10 @@ void BufferPool::fetch_page_from_rpc(Page *page, PageId page_id,
 
   auto tracer =
       trace_api::Provider::GetTracerProvider()->GetTracer("my-app-tracer");
-  //   BrpcTextMapCarrier carrier(cntl);
-  //   auto propagator = opentelemetry::trace::propagation::HttpTraceContext();
-  //   auto current_ctx = opentelemetry::context::RuntimeContext::GetCurrent();
-  //   propagator.Inject(carrier, current_ctx);
+  // BrpcTextMapCarrier carrier(cntl);
+  // auto propagator = opentelemetry::trace::propagation::HttpTraceContext();
+  // auto current_ctx = opentelemetry::context::RuntimeContext::GetCurrent();
+  // propagator.Inject(carrier, current_ctx);
 
   request.add_page_id();
   request.mutable_page_id(0)->set_table_id(page_id.table_id);

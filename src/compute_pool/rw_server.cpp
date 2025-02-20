@@ -760,6 +760,10 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           // std::cout << e.GetInfo() << std::endl;
           abort_txns[connection_id]++;
 
+          transaction_span->SetStatus(StatusCode::kError, "abort");
+          transaction_span->End();
+          transaction_scope = nullptr;
+
           // assert(0);
         } catch (RMDBError &e) {
           // 遇到异常，需要打印failure到output.txt文件中，并发异常信息返回给客户端
