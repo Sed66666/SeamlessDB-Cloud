@@ -13,6 +13,7 @@
 /cmake-build-wsl_profile_debug
 *.out
 /build_debug
+/build_trace
 
 # python
 __pycache__/

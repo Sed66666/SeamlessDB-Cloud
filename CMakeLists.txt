@@ -26,6 +26,11 @@ endif()
 if($ENV{TIME_OPEN})
     add_definitions(-DTIME_OPEN)
 endif()
+
+if($ENV{ENABLE_TRACE})
+    add_definitions(-DENABLE_TRACE)
+endif()
+
 # add_compile_options(-fsanitize=address -fsanitize-recover=address)
 # add_link_options(-fsanitize=address -fsanitize-recover=address)
 
