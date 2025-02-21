@@ -376,7 +376,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 
   pthread_setname_np(pthread_self(), std::to_string(thread_id).c_str());
   trace_resource::ResourceAttributes attributes = {
-      {"service.name", "seamlessdb"}, {"thread.id", thread_id}};
+      {"service.name", "WOOKONG DB"}, {"thread.id", thread_id}};
   auto resource = trace_resource::Resource::Create(attributes);
   auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
   auto processor = trace_sdk::BatchSpanProcessorFactory::Create(
@@ -386,7 +386,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
   // set the global trace provider
   trace_api::Provider::SetTracerProvider(provider);
   auto tracer =
-      trace_api::Provider::GetTracerProvider()->GetTracer("my-app-tracer");
+      trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
 
   yyscan_t scanner;
   if (yylex_init(&scanner)) {
@@ -671,8 +671,10 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     RwServerDebug::getInstance()->DEBUG_RECEIVE_SQL(fd, data_recv);
 #endif
 
+    bool is_begin = false;
     if (strcmp(data_recv, "begin;") == 0) {
-      transaction_span = tracer->StartSpan("begin transaction");
+      is_begin = true;
+      transaction_span = tracer->StartSpan("transaction");
       transaction_scope = std::make_shared<Scope>(Scope(transaction_span));
     }
 
@@ -760,7 +762,11 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           // std::cout << e.GetInfo() << std::endl;
           abort_txns[connection_id]++;
 
-          transaction_span->SetStatus(StatusCode::kError, "abort");
+          transaction_span->SetStatus(
+              StatusCode::kError,
+              node->abort_type_[static_cast<int>(e.GetAbortReason())]);
+          transaction_span->SetAttribute("conflict_transaction_id",
+                                         e.get_conflict_txn_id());
           transaction_span->End();
           transaction_scope = nullptr;
 
@@ -806,6 +812,10 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     }
 
     sql_span->End();
+    if (is_begin) {
+      transaction_span->SetAttribute("transaction_id",
+                                     context->txn_->get_transaction_id());
+    }
     if (strcmp(data_recv, "commit;") == 0) {
       commit_txns[connection_id]++;
       transaction_span->End();

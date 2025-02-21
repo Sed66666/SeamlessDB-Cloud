@@ -91,7 +91,7 @@ void BufferPool::fetch_page_from_rpc(Page *page, PageId page_id,
   brpc::CallId cid = cntl->call_id();
 
   auto tracer =
-      trace_api::Provider::GetTracerProvider()->GetTracer("my-app-tracer");
+      trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
   // BrpcTextMapCarrier carrier(cntl);
   // auto propagator = opentelemetry::trace::propagation::HttpTraceContext();
   // auto current_ctx = opentelemetry::context::RuntimeContext::GetCurrent();

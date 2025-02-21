@@ -77,4 +77,7 @@ public:
                                "HashJoin",
                                "Sort",
                                "Projection"};
+
+  std::string abort_type_[3] = {"LOCK_ON_SHIRINKING", "UPGRADE_CONFLICT",
+                                "DEADLOCK_PREVENTION"};
 };
