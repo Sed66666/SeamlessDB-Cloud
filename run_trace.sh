@@ -1,5 +1,6 @@
-set -e
+set -ex
 
+# ./killall.sh
 rm -rf /build_trace/db_tpcc
 bash build_trace.sh
 cd build_trace

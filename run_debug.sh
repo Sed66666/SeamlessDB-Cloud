@@ -1,5 +1,6 @@
 set -e
 
+./killall.sh
 rm -rf /build/db_tpcc
 bash build_debug.sh
 cd build_debug

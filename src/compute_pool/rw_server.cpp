@@ -25,10 +25,10 @@
 
 #include "debug_log.h"
 
-#include "opentelemetry/exporters/otlp/otlp_http_exporter_factory.h"
-#include "opentelemetry/sdk/trace/batch_span_processor_factory.h"
-#include "opentelemetry/sdk/trace/tracer_provider_factory.h"
-#include "opentelemetry/trace/provider.h"
+#include <opentelemetry/exporters/otlp/otlp_http_exporter_factory.h>
+#include <opentelemetry/sdk/trace/batch_span_processor_factory.h>
+#include <opentelemetry/sdk/trace/tracer_provider_factory.h>
+#include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_context.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -46,6 +46,7 @@ DEFINE_int32(max_retry, 3, "Max retries(not including the first RPC)");
 DEFINE_int32(interval_ms, 10, "Milliseconds between consecutive requests");
 
 // #define TIME_OPEN 0
+// #define ENABLE_TRACE 1
 
 int state_open_ = 0;
 bool use_proxy_;

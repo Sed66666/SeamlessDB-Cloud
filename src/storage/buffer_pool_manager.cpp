@@ -1,8 +1,7 @@
 #include "buffer_pool_manager.h"
-#include "brpc_textmap_carrier.h"
-#include "opentelemetry/trace/provider.h"
 #include "storage/storage_service.pb.h"
 #include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -93,10 +92,6 @@ void BufferPool::fetch_page_from_rpc(Page *page, PageId page_id,
 #ifdef ENABLE_TRACE
   auto tracer =
       trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
-  // BrpcTextMapCarrier carrier(cntl);
-  // auto propagator = opentelemetry::trace::propagation::HttpTraceContext();
-  // auto current_ctx = opentelemetry::context::RuntimeContext::GetCurrent();
-  // propagator.Inject(carrier, current_ctx);
 #endif
   request.add_page_id();
   request.mutable_page_id(0)->set_table_id(page_id.table_id);
@@ -105,13 +100,13 @@ void BufferPool::fetch_page_from_rpc(Page *page, PageId page_id,
   request.add_latest_lsn(slice_mgr_->get_latest_lsn(
       SliceId(page_id.table_id, page_id.page_no / SLICE_NUM)));
 #ifdef ENABLE_TRACE
-  auto span = tracer->StartSpan(FETCH_FROM_REMOTE, op);
-// tracer->GetCurrentSpan()->AddEvent(FETCH_FROM_REMOTE,
-//                                    {{PAGE_ID, page_id.page_no}});
+  // auto span = tracer->StartSpan(FETCH_FROM_REMOTE, op);
+  tracer->GetCurrentSpan()->AddEvent(FETCH_FROM_REMOTE,
+                                     {{PAGE_ID, page_id.page_no}});
 #endif
   stub.GetLatestPage(cntl, &request, response, NULL);
 #ifdef ENABLE_TRACE
-  span->End();
+  // span->End();
 #endif
 
   // RwServerDebug::getInstance()->DEBUG_PRINT("[fetch_page_from_rpc][end][table
