@@ -99,7 +99,7 @@ if("")
   find_dependency(OpenTracing)
 endif()
 
-if("")
+if("0")
   find_dependency(prometheus-cpp)
 endif()
 
@@ -107,7 +107,7 @@ if("TRUE" OR "TRUE")
   find_dependency(Protobuf)
 endif()
 
-if (ON AND NOT )
+if (ON AND NOT OFF)
   if("TRUE")
     find_dependency(CURL)
   endif()

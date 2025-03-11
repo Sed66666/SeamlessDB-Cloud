@@ -46,7 +46,7 @@ DEFINE_int32(max_retry, 3, "Max retries(not including the first RPC)");
 DEFINE_int32(interval_ms, 10, "Milliseconds between consecutive requests");
 
 // #define TIME_OPEN 0
-// #define ENABLE_TRACE 1
+#define ENABLE_TRACE 1
 
 int state_open_ = 0;
 bool use_proxy_;
@@ -381,8 +381,11 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
       {"service.name", "WOOKONG DB"}, {"thread.id", thread_id}};
   auto resource = trace_resource::Resource::Create(attributes);
   auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
-  auto processor = trace_sdk::BatchSpanProcessorFactory::Create(
-      std::move(exporter), trace_sdk::BatchSpanProcessorOptions());
+  auto option = trace_sdk::BatchSpanProcessorOptions();
+  option.max_queue_size = 2097152;
+  option.max_export_batch_size = 524288;
+  auto processor =
+      trace_sdk::BatchSpanProcessorFactory::Create(std::move(exporter), option);
   std::shared_ptr<trace_api::TracerProvider> provider =
       trace_sdk::TracerProviderFactory::Create(std::move(processor), resource);
   // set the global trace provider
@@ -762,6 +765,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 #endif
           node->portal_->run(portalStmt, node->ql_mgr_, context);
 #ifdef ENABLE_TRACE
+          sql_span->SetAttribute("total scan count", context->count_);
           exector_span->End();
 #endif
           node->portal_->drop();

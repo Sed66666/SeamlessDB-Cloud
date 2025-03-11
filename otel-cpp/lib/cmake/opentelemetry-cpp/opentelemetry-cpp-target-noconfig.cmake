@@ -8,12 +8,12 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 # Import target "opentelemetry-cpp::proto" for configuration ""
 set_property(TARGET opentelemetry-cpp::proto APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 set_target_properties(opentelemetry-cpp::proto PROPERTIES
-  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libopentelemetry_proto.so"
-  IMPORTED_SONAME_NOCONFIG "libopentelemetry_proto.so"
+  IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libopentelemetry_proto.a"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS opentelemetry-cpp::proto )
-list(APPEND _IMPORT_CHECK_FILES_FOR_opentelemetry-cpp::proto "${_IMPORT_PREFIX}/lib/libopentelemetry_proto.so" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_opentelemetry-cpp::proto "${_IMPORT_PREFIX}/lib/libopentelemetry_proto.a" )
 
 # Import target "opentelemetry-cpp::common" for configuration ""
 set_property(TARGET opentelemetry-cpp::common APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
@@ -184,6 +184,36 @@ set_target_properties(opentelemetry-cpp::in_memory_metric_exporter PROPERTIES
 
 list(APPEND _IMPORT_CHECK_TARGETS opentelemetry-cpp::in_memory_metric_exporter )
 list(APPEND _IMPORT_CHECK_FILES_FOR_opentelemetry-cpp::in_memory_metric_exporter "${_IMPORT_PREFIX}/lib/libopentelemetry_exporter_in_memory_metric.a" )
+
+# Import target "opentelemetry-cpp::prometheus_exporter" for configuration ""
+set_property(TARGET opentelemetry-cpp::prometheus_exporter APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
+set_target_properties(opentelemetry-cpp::prometheus_exporter PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libopentelemetry_exporter_prometheus.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS opentelemetry-cpp::prometheus_exporter )
+list(APPEND _IMPORT_CHECK_FILES_FOR_opentelemetry-cpp::prometheus_exporter "${_IMPORT_PREFIX}/lib/libopentelemetry_exporter_prometheus.a" )
+
+# Import target "opentelemetry-cpp::pull" for configuration ""
+set_property(TARGET opentelemetry-cpp::pull APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
+set_target_properties(opentelemetry-cpp::pull PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "C;CXX"
+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libprometheus-cpp-pull.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS opentelemetry-cpp::pull )
+list(APPEND _IMPORT_CHECK_FILES_FOR_opentelemetry-cpp::pull "${_IMPORT_PREFIX}/lib/libprometheus-cpp-pull.a" )
+
+# Import target "opentelemetry-cpp::core" for configuration ""
+set_property(TARGET opentelemetry-cpp::core APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
+set_target_properties(opentelemetry-cpp::core PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libprometheus-cpp-core.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS opentelemetry-cpp::core )
+list(APPEND _IMPORT_CHECK_FILES_FOR_opentelemetry-cpp::core "${_IMPORT_PREFIX}/lib/libprometheus-cpp-core.a" )
 
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)

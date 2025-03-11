@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget opentelemetry-cpp::proto opentelemetry-cpp::api opentelemetry-cpp::sdk opentelemetry-cpp::common opentelemetry-cpp::trace opentelemetry-cpp::metrics opentelemetry-cpp::logs opentelemetry-cpp::version opentelemetry-cpp::resources opentelemetry-cpp::ext opentelemetry-cpp::http_client_curl opentelemetry-cpp::otlp_recordable opentelemetry-cpp::otlp_http_client opentelemetry-cpp::otlp_http_exporter opentelemetry-cpp::otlp_http_log_record_exporter opentelemetry-cpp::otlp_http_metric_exporter opentelemetry-cpp::ostream_span_exporter opentelemetry-cpp::ostream_metrics_exporter opentelemetry-cpp::ostream_log_record_exporter opentelemetry-cpp::in_memory_span_exporter opentelemetry-cpp::in_memory_metric_exporter)
+foreach(_expectedTarget opentelemetry-cpp::proto opentelemetry-cpp::api opentelemetry-cpp::sdk opentelemetry-cpp::common opentelemetry-cpp::trace opentelemetry-cpp::metrics opentelemetry-cpp::logs opentelemetry-cpp::version opentelemetry-cpp::resources opentelemetry-cpp::ext opentelemetry-cpp::http_client_curl opentelemetry-cpp::otlp_recordable opentelemetry-cpp::otlp_http_client opentelemetry-cpp::otlp_http_exporter opentelemetry-cpp::otlp_http_log_record_exporter opentelemetry-cpp::otlp_http_metric_exporter opentelemetry-cpp::ostream_span_exporter opentelemetry-cpp::ostream_metrics_exporter opentelemetry-cpp::ostream_log_record_exporter opentelemetry-cpp::in_memory_span_exporter opentelemetry-cpp::in_memory_metric_exporter opentelemetry-cpp::prometheus_exporter opentelemetry-cpp::pull opentelemetry-cpp::core opentelemetry-cpp::util)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -51,7 +51,7 @@ if(_IMPORT_PREFIX STREQUAL "/")
 endif()
 
 # Create imported target opentelemetry-cpp::proto
-add_library(opentelemetry-cpp::proto SHARED IMPORTED)
+add_library(opentelemetry-cpp::proto STATIC IMPORTED)
 
 set_target_properties(opentelemetry-cpp::proto PROPERTIES
   INTERFACE_LINK_LIBRARIES "protobuf::libprotobuf"
@@ -201,6 +201,39 @@ add_library(opentelemetry-cpp::in_memory_metric_exporter STATIC IMPORTED)
 set_target_properties(opentelemetry-cpp::in_memory_metric_exporter PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
   INTERFACE_LINK_LIBRARIES "opentelemetry-cpp::metrics"
+)
+
+# Create imported target opentelemetry-cpp::prometheus_exporter
+add_library(opentelemetry-cpp::prometheus_exporter STATIC IMPORTED)
+
+set_target_properties(opentelemetry-cpp::prometheus_exporter PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "opentelemetry-cpp::metrics;opentelemetry-cpp::pull;opentelemetry-cpp::core;opentelemetry-cpp::util"
+)
+
+# Create imported target opentelemetry-cpp::pull
+add_library(opentelemetry-cpp::pull STATIC IMPORTED)
+
+set_target_properties(opentelemetry-cpp::pull PROPERTIES
+  INTERFACE_COMPILE_FEATURES "cxx_std_11"
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "opentelemetry-cpp::core;\$<LINK_ONLY:opentelemetry-cpp::util>;\$<LINK_ONLY:Threads::Threads>;\$<LINK_ONLY:\$<IF:\$<BOOL:ON>,prometheus-cpp::civetweb,civetweb::civetweb-cpp>>;\$<LINK_ONLY:\$<\$<AND:\$<BOOL:UNIX>,\$<NOT:\$<BOOL:APPLE>>>:rt>>;\$<LINK_ONLY:\$<\$<BOOL:ON>:ZLIB::ZLIB>>"
+)
+
+# Create imported target opentelemetry-cpp::core
+add_library(opentelemetry-cpp::core STATIC IMPORTED)
+
+set_target_properties(opentelemetry-cpp::core PROPERTIES
+  INTERFACE_COMPILE_FEATURES "cxx_std_11"
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:Threads::Threads>;\$<LINK_ONLY:\$<\$<AND:\$<BOOL:UNIX>,\$<NOT:\$<BOOL:APPLE>>>:rt>>"
+)
+
+# Create imported target opentelemetry-cpp::util
+add_library(opentelemetry-cpp::util INTERFACE IMPORTED)
+
+set_target_properties(opentelemetry-cpp::util PROPERTIES
+  INTERFACE_COMPILE_FEATURES "cxx_std_11"
 )
 
 if(CMAKE_VERSION VERSION_LESS 3.0.0)

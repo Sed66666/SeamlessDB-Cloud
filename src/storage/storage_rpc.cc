@@ -32,15 +32,11 @@ void StoragePoolImpl::LogWrite(
 
   cntl->request_attachment().copy_to(trace_id_, 16, 0);
   cntl->request_attachment().copy_to(span_id_, 8, 16);
-  // auto a = opentelemetry::nostd::span<const uint8_t, 16>(
-  //     reinterpret_cast<const uint8_t *>(trace_id_), 16);
-  // auto b = opentelemetry::nostd::span<const uint8_t, 8>(
-  //     reinterpret_cast<const uint8_t *>(span_id_), 8);
 
   options.parent =
       SpanContext(TraceId(trace_id_), SpanId(span_id_), TraceFlags(), true);
-  auto tracer = Provider::GetTracerProvider()->GetTracer("storage");
-  auto span = tracer->StartSpan("storage_log", options);
+  auto tracer = Provider::GetTracerProvider()->GetTracer("Storage");
+  auto span = tracer->StartSpan("write log", options);
 
   // deserialize log
   // auto log_strs = request->log();

@@ -11,5 +11,5 @@ export TIME_OPEN=0
 export ENABLE_TRACE=1
 
 
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake ..
 cmake --build . -j16
