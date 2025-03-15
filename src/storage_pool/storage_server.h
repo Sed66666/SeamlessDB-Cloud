@@ -9,17 +9,6 @@
 #include "storage_defs.h"
 #include "system/sm_manager.h"
 
-#include <opentelemetry/exporters/otlp/otlp_http_exporter_factory.h>
-#include <opentelemetry/sdk/trace/batch_span_processor_factory.h>
-#include <opentelemetry/sdk/trace/tracer_provider_factory.h>
-#include <opentelemetry/trace/provider.h>
-#include <opentelemetry/trace/span_context.h>
-#include <opentelemetry/trace/span_startoptions.h>
-
-namespace trace_api = opentelemetry::trace;
-namespace trace_sdk = opentelemetry::sdk::trace;
-namespace trace_resource = opentelemetry::sdk::resource;
-namespace trace_exporter = opentelemetry::exporter::otlp;
 class StorageServer {
 public:
   StorageServer(int machine_id, int local_rpc_port, DiskManager *disk_manager,
@@ -42,21 +31,6 @@ public:
     if (server.Start(point, &options) != 0) {
       LOG(ERROR) << "Failed to start server.";
     }
-
-    // pthread_setname_np(pthread_self(), std::to_string(thread_id).c_str());
-    trace_resource::ResourceAttributes attributes = {
-        {"service.name", "storage"}};
-    auto resource = trace_resource::Resource::Create(attributes);
-    auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
-    auto processor = trace_sdk::BatchSpanProcessorFactory::Create(
-        std::move(exporter), trace_sdk::BatchSpanProcessorOptions());
-    std::shared_ptr<trace_api::TracerProvider> provider =
-        trace_sdk::TracerProviderFactory::Create(std::move(processor),
-                                                 resource);
-    // set the global trace provider
-    trace_api::Provider::SetTracerProvider(provider);
-    auto tracer =
-        trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
 
     server.RunUntilAskedToQuit();
   }

@@ -1,0 +1,337 @@
+[
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/thirdparty/cjson",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/cjson.dir/cJSON.cc.o -c /root/SeamlessDB-Cloud/src/thirdparty/cjson/cJSON.cc",
+  "file": "/root/SeamlessDB-Cloud/src/thirdparty/cjson/cJSON.cc"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/coroutine/coroutine_scheduler.cpp.o -c /root/SeamlessDB-Cloud/src/state/coroutine/coroutine_scheduler.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/coroutine/coroutine_scheduler.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/coroutine/doorbell.cpp.o -c /root/SeamlessDB-Cloud/src/state/coroutine/doorbell.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/coroutine/doorbell.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/meta_manager.cpp.o -c /root/SeamlessDB-Cloud/src/state/meta_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/meta_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/qp_manager.cpp.o -c /root/SeamlessDB-Cloud/src/state/qp_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/qp_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/allocator/rdma_region_allocator.cpp.o -c /root/SeamlessDB-Cloud/src/state/allocator/rdma_region_allocator.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/allocator/rdma_region_allocator.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/state_item/op_state.cpp.o -c /root/SeamlessDB-Cloud/src/state/state_item/op_state.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/state_item/op_state.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/op_state_manager.cpp.o -c /root/SeamlessDB-Cloud/src/state/op_state_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/op_state_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/state_manager.cpp.o -c /root/SeamlessDB-Cloud/src/state/state_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/state_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rdma_util.dir/resume_util.cpp.o -c /root/SeamlessDB-Cloud/src/state/resume_util.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state/resume_util.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/analyze",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/analyze.dir/analyze.cpp.o -c /root/SeamlessDB-Cloud/src/analyze/analyze.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/analyze/analyze.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/index",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/index.dir/ix_node_handle.cpp.o -c /root/SeamlessDB-Cloud/src/index/ix_node_handle.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/index/ix_node_handle.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/index",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/index.dir/ix_index_handle.cpp.o -c /root/SeamlessDB-Cloud/src/index/ix_index_handle.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/index/ix_index_handle.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/index",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/index.dir/ix_scan.cpp.o -c /root/SeamlessDB-Cloud/src/index/ix_scan.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/index/ix_scan.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/index",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/index.dir/__/common/rwlatch.cpp.o -c /root/SeamlessDB-Cloud/src/common/rwlatch.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/common/rwlatch.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/system",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/system.dir/sm_manager.cpp.o -c /root/SeamlessDB-Cloud/src/system/sm_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/system/sm_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/multi_version",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/multi_version_record.dir/multi_version_file_handle.cpp.o -c /root/SeamlessDB-Cloud/src/multi_version/multi_version_file_handle.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/multi_version/multi_version_file_handle.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/multi_version",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -Dmulti_version_records_EXPORTS -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -fPIC -o CMakeFiles/multi_version_records.dir/multi_version_file_handle.cpp.o -c /root/SeamlessDB-Cloud/src/multi_version/multi_version_file_handle.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/multi_version/multi_version_file_handle.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution_op.dir/executor_block_join.cpp.o -c /root/SeamlessDB-Cloud/src/execution/executor_block_join.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/executor_block_join.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution_op.dir/executor_hash_join.cpp.o -c /root/SeamlessDB-Cloud/src/execution/executor_hash_join.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/executor_hash_join.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution_op.dir/executor_projection.cpp.o -c /root/SeamlessDB-Cloud/src/execution/executor_projection.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/executor_projection.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution_op.dir/execution_sort.cpp.o -c /root/SeamlessDB-Cloud/src/execution/execution_sort.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/execution_sort.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution_op.dir/comp_ckpt_mgr.cpp.o -c /root/SeamlessDB-Cloud/src/execution/comp_ckpt_mgr.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/comp_ckpt_mgr.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution.dir/execution_manager.cpp.o -c /root/SeamlessDB-Cloud/src/execution/execution_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/execution_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution.dir/executor_block_join.cpp.o -c /root/SeamlessDB-Cloud/src/execution/executor_block_join.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/executor_block_join.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution.dir/executor_hash_join.cpp.o -c /root/SeamlessDB-Cloud/src/execution/executor_hash_join.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/executor_hash_join.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution.dir/executor_projection.cpp.o -c /root/SeamlessDB-Cloud/src/execution/executor_projection.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/executor_projection.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution.dir/execution_sort.cpp.o -c /root/SeamlessDB-Cloud/src/execution/execution_sort.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/execution_sort.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/execution",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/execution.dir/comp_ckpt_mgr.cpp.o -c /root/SeamlessDB-Cloud/src/execution/comp_ckpt_mgr.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/execution/comp_ckpt_mgr.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/parser",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/parser.dir/yacc.tab.cpp.o -c /root/SeamlessDB-Cloud/src/parser/yacc.tab.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/parser/yacc.tab.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/parser",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/parser.dir/lex.yy.cpp.o -c /root/SeamlessDB-Cloud/src/parser/lex.yy.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/parser/lex.yy.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/parser",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/parser.dir/ast.cpp.o -c /root/SeamlessDB-Cloud/src/parser/ast.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/parser/ast.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/optimizer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/planner.dir/planner.cpp.o -c /root/SeamlessDB-Cloud/src/optimizer/planner.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/optimizer/planner.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/optimizer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -o CMakeFiles/plan_serialize_test.dir/plan_serialize_test.cpp.o -c /root/SeamlessDB-Cloud/src/optimizer/plan_serialize_test.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/optimizer/plan_serialize_test.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage.dir/disk_manager.cpp.o -c /root/SeamlessDB-Cloud/src/storage/disk_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/storage/disk_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage.dir/buffer_pool_manager.cpp.o -c /root/SeamlessDB-Cloud/src/storage/buffer_pool_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/storage/buffer_pool_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage.dir/__/replacer/lru_replacer.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/lru_replacer.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/lru_replacer.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage.dir/__/replacer/clock_replacer.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/clock_replacer.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/clock_replacer.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage.dir/storage_rpc.cc.o -c /root/SeamlessDB-Cloud/src/storage/storage_rpc.cc",
+  "file": "/root/SeamlessDB-Cloud/src/storage/storage_rpc.cc"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage.dir/storage_service.pb.cc.o -c /root/SeamlessDB-Cloud/src/storage/storage_service.pb.cc",
+  "file": "/root/SeamlessDB-Cloud/src/storage/storage_service.pb.cc"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/common",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/rwlatch.dir/rwlatch.cpp.o -c /root/SeamlessDB-Cloud/src/common/rwlatch.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/common/rwlatch.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/replacer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/lru_replacer.dir/lru_replacer.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/lru_replacer.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/lru_replacer.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/replacer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/lru_replacer.dir/clock_replacer.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/clock_replacer.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/clock_replacer.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/replacer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/clock_replacer.dir/lru_replacer.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/lru_replacer.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/lru_replacer.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/replacer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/clock_replacer.dir/clock_replacer.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/clock_replacer.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/clock_replacer.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/replacer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -o CMakeFiles/lru_replacer_test.dir/grading_lru_replacer_test.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/grading_lru_replacer_test.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/grading_lru_replacer_test.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/replacer",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -o CMakeFiles/clock_replacer_test.dir/clock_replacer_test.cpp.o -c /root/SeamlessDB-Cloud/src/replacer/clock_replacer_test.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/replacer/clock_replacer_test.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/transaction",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/transaction.dir/concurrency/lock_manager.cpp.o -c /root/SeamlessDB-Cloud/src/transaction/concurrency/lock_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/transaction/concurrency/lock_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/transaction",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/transaction.dir/transaction_manager.cpp.o -c /root/SeamlessDB-Cloud/src/transaction/transaction_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/transaction/transaction_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/recovery",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/recovery.dir/log_manager.cpp.o -c /root/SeamlessDB-Cloud/src/recovery/log_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/recovery/log_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/recovery",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -Drecoverys_EXPORTS -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -fPIC -o CMakeFiles/recoverys.dir/log_manager.cpp.o -c /root/SeamlessDB-Cloud/src/recovery/log_manager.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/recovery/log_manager.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage_pool",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/log_store.dir/log_store.cpp.o -c /root/SeamlessDB-Cloud/src/storage_pool/log_store.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/storage_pool/log_store.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage_pool",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage_pool.dir/storage_server.cpp.o -c /root/SeamlessDB-Cloud/src/storage_pool/storage_server.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/storage_pool/storage_server.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/storage_pool",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/storage_pool.dir/log_replay.cpp.o -c /root/SeamlessDB-Cloud/src/storage_pool/log_replay.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/storage_pool/log_replay.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/compute_pool",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/rw_server.dir/rw_server.cpp.o -c /root/SeamlessDB-Cloud/src/compute_pool/rw_server.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/compute_pool/rw_server.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/state_pool",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty  -Wno-unused-result -fPIC -o CMakeFiles/state_pool.dir/state_server.cpp.o -c /root/SeamlessDB-Cloud/src/state_pool/state_server.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/state_pool/state_server.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/benchmark",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/workload.dir/test/test_wk.cpp.o -c /root/SeamlessDB-Cloud/src/benchmark/test/test_wk.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/benchmark/test/test_wk.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/benchmark",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/workload.dir/tpcc/tpcc_wk.cpp.o -c /root/SeamlessDB-Cloud/src/benchmark/tpcc/tpcc_wk.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/benchmark/tpcc/tpcc_wk.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/benchmark",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/workload.dir/tpch/tpch_wk.cpp.o -c /root/SeamlessDB-Cloud/src/benchmark/tpch/tpch_wk.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/benchmark/tpch/tpch_wk.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/benchmark",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/workload.dir/util/clock.cpp.o -c /root/SeamlessDB-Cloud/src/benchmark/util/clock.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/benchmark/util/clock.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/benchmark",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/workload.dir/util/random.cpp.o -c /root/SeamlessDB-Cloud/src/benchmark/util/random.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/benchmark/util/random.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/benchmark",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/comp_exp.dir/tpch/comparative_exp.cpp.o -c /root/SeamlessDB-Cloud/src/benchmark/tpch/comparative_exp.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/benchmark/tpch/comparative_exp.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/src/proxy",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -DOPENTELEMETRY_ABI_VERSION_NO=1 -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/src -I/root/SeamlessDB-Cloud/src/thirdparty -isystem /root/SeamlessDB-Cloud/otel-cpp/include  -Wno-unused-result -fPIC -o CMakeFiles/proxy.dir/proxy.cpp.o -c /root/SeamlessDB-Cloud/src/proxy/proxy.cpp",
+  "file": "/root/SeamlessDB-Cloud/src/proxy/proxy.cpp"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/deps/googletest/googlemock",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/deps/googletest/googlemock/include -I/root/SeamlessDB-Cloud/deps/googletest/googlemock -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /root/SeamlessDB-Cloud/deps/googletest/googlemock/src/gmock-all.cc",
+  "file": "/root/SeamlessDB-Cloud/deps/googletest/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/deps/googletest/googlemock",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googlemock/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googlemock -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /root/SeamlessDB-Cloud/deps/googletest/googlemock/src/gmock_main.cc",
+  "file": "/root/SeamlessDB-Cloud/deps/googletest/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/deps/googletest/googletest",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -I/root/SeamlessDB-Cloud/deps/googletest/googletest/include -I/root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /root/SeamlessDB-Cloud/deps/googletest/googletest/src/gtest-all.cc",
+  "file": "/root/SeamlessDB-Cloud/deps/googletest/googletest/src/gtest-all.cc"
+},
+{
+  "directory": "/root/SeamlessDB-Cloud/out/build/enable-trace/deps/googletest/googletest",
+  "command": "/usr/bin/c++ -DENABLE_METRIC -DENABLE_TRACE -I/root/SeamlessDB-Cloud/src/thirdparty/brpc/build/output/include -I/root/SeamlessDB-Cloud/otel-cpp/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest/include -isystem /root/SeamlessDB-Cloud/deps/googletest/googletest  -Wno-unused-result -fPIC -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /root/SeamlessDB-Cloud/deps/googletest/googletest/src/gtest_main.cc",
+  "file": "/root/SeamlessDB-Cloud/deps/googletest/googletest/src/gtest_main.cc"
+}
+]

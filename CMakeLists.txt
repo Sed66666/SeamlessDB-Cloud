@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 project(SeamlessDB)
 
+#copy compile_commands from CMAKE_BINARY_DIR to CMAKE_SOURCE_DIR to enable clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    ${CMAKE_BINARY_DIR}/compile_commands.json
+    ${CMAKE_SOURCE_DIR}/compile_commands.json)
+
 option(BRPC "With brpc" ON)
 # option(WITH_SNAPPY "With snappy" ON)
 
@@ -19,7 +25,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -O3")
 
 
 # env
-if($ENV{PRINT_LOG})
+if(PRINT_LOG)
   add_definitions(-DPRINT_LOG)
 endif()
 
@@ -27,8 +33,11 @@ if($ENV{TIME_OPEN})
     add_definitions(-DTIME_OPEN)
 endif()
 
-if($ENV{ENABLE_TRACE})
+if(ENABLE_TRACE)
     add_definitions(-DENABLE_TRACE)
+endif()
+if(ENABLE_METRIC)
+    add_definitions(-DENABLE_METRIC)
 endif()
 
 # add_compile_options(-fsanitize=address -fsanitize-recover=address)
@@ -94,7 +103,8 @@ endif()
 set(opentelemetry-cpp_DIR otel-cpp/lib/cmake/opentelemetry-cpp)
 find_package(CURL)
 find_package(nlohmann_json)
-# Use find_package to include OpenTelemetry C++
+find_package(prometheus-cpp REQUIRED)
+find_package(ZLIB REQUIRED)
 find_package(opentelemetry-cpp CONFIG REQUIRED NO_DEFAULT_PATH)
 message(STATUS "OpenTelemetry Include Dirs: ${OPENTELEMETRY_CPP_INCLUDE_DIRS}")
 include_directories(${OPENTELEMETRY_CPP_INCLUDE_DIRS})

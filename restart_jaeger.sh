@@ -1,3 +1,5 @@
+set -x
+
 export PATH=$PATH:/usr/local/go/bin
 export OTEL_TRACES_SAMPLER=always_off
 cd /root/jaeger

@@ -46,7 +46,6 @@ DEFINE_int32(max_retry, 3, "Max retries(not including the first RPC)");
 DEFINE_int32(interval_ms, 10, "Milliseconds between consecutive requests");
 
 // #define TIME_OPEN 0
-#define ENABLE_TRACE 1
 
 int state_open_ = 0;
 bool use_proxy_;
@@ -714,33 +713,33 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 
           // analyze and rewrite
 
-#ifdef ENABLE_TRACE
-          auto analyze_span = tracer->StartSpan("analyze");
-#endif
+          // #ifdef ENABLE_TRACE
+          //           auto analyze_span = tracer->StartSpan("analyze");
+          // #endif
           std::shared_ptr<Query> query =
               node->analyze_->do_analyze(ast::parse_tree);
           yy_delete_buffer(buf, scanner);
           finish_analyze = true;
-#ifdef ENABLE_TRACE
-          analyze_span->End();
-#endif
+          // #ifdef ENABLE_TRACE
+          //           analyze_span->End();
+          // #endif
 
           // 优化器
 
           /*
               设置planner的sql_id，并启动plan_query
           */
-#ifdef ENABLE_TRACE
-          auto optimizer_span = tracer->StartSpan("optimizer");
-#endif
+          // #ifdef ENABLE_TRACE
+          //           auto optimizer_span = tracer->StartSpan("optimizer");
+          // #endif
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
 #ifdef ENABLE_TRACE
-          sql_span->SetAttribute("Type",
-                                 node->sql_type_[context->plan_tag_ - 1]);
-          plan->format_collect("", optimizer_span);
-          optimizer_span->End();
+          sql_span->SetAttribute("Type", node->sql_type_[plan->tag - 1]);
+          plan->format_collect("", sql_span);
+          // plan->format_collect("", optimizer_span);
+          // optimizer_span->End();
 #endif
           // @STATE: write plan into state_node
           if (state_open_) {
@@ -749,25 +748,25 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           }
 
           // portal
-#ifdef ENABLE_TRACE
-          auto portal_span = tracer->StartSpan("portal");
-#endif
+          // #ifdef ENABLE_TRACE
+          //           auto portal_span = tracer->StartSpan("portal");
+          // #endif
           std::shared_ptr<PortalStmt> portalStmt =
               node->portal_->start(plan, context);
           // if (portalStmt->root != nullptr)
           //   CompCkptManager::get_instance()->add_new_query_tree(
           //       portalStmt->root);
-#ifdef ENABLE_TRACE
-          portal_span->End();
+          // #ifdef ENABLE_TRACE
+          //           portal_span->End();
 
-          auto exector_span = tracer->StartSpan("exector");
-          trace_api::Scope exector_scope(exector_span);
-#endif
+          //           auto exector_span = tracer->StartSpan("exector");
+          //           trace_api::Scope exector_scope(exector_span);
+          // #endif
           node->portal_->run(portalStmt, node->ql_mgr_, context);
-#ifdef ENABLE_TRACE
-          sql_span->SetAttribute("total scan count", context->count_);
-          exector_span->End();
-#endif
+          // #ifdef ENABLE_TRACE
+          //           sql_span->SetAttribute("total scan count",
+          //           context->count_); exector_span->End();
+          // #endif
           node->portal_->drop();
 
         } catch (TransactionAbortException &e) {

@@ -1,14 +1,12 @@
-set -e
+set -ex
 
-./killall.sh
-rm -rf /build/db_tpcc
-bash build_debug.sh
-cd build_debug
+# ./killall.sh
+rm -rf out/build/debug/db_tpcc
+cmake --preset debug
+cmake --build out/build/debug --parallel 38 --
+cd out/build/debug
 ./bin/storage_pool &
 sleep 8
 ./bin/state_pool &
 sleep 8
-./bin/rw_server active rw &
-
-# sleep 8
-# /root/SeamlessDB-Cloud/seamless_client/build/seamless_client
+\time -v ./bin/rw_server active rw

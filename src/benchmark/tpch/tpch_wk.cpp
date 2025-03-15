@@ -210,20 +210,19 @@ NativeTransaction *TPCHWK::generate_transaction(int thread_index) {
   }
   queries_example[thread_index]->generate_new_txn();
   return queries_example[thread_index];
-  // switch (rand() % 1)
-  // {
-  //     case 0: {
-  //         queries5[thread_index]->generate_new_txn();
-  //         return queries5[thread_index];
-  //     }   break;
-  //     case 1: {
-  //         queries10[thread_index]->generate_new_txn();
-  //         return queries10[thread_index];
-  //     }   break;
-  //     default: {
-  //         std::cerr << "[Error]: Not Implemented! [Location]: " << __FILE__
-  //         << ":" << __LINE__ << std::endl;
-  //     }   break;
+  // switch (rand() % 1) {
+  // case 0: {
+  //   queries5[thread_index]->generate_new_txn();
+  //   return queries5[thread_index];
+  // } break;
+  // case 1: {
+  //   queries10[thread_index]->generate_new_txn();
+  //   return queries10[thread_index];
+  // } break;
+  // default: {
+  //   std::cerr << "[Error]: Not Implemented! [Location]: " << __FILE__ << ":"
+  //             << __LINE__ << std::endl;
+  // } break;
   // }
   return nullptr;
 }
@@ -231,5 +230,3 @@ NativeTransaction *TPCHWK::generate_transaction(int thread_index) {
 NativeTransaction *TPCHWK::get_transaction(int thread_index) {
   return queries_example[thread_index];
 }
-
-

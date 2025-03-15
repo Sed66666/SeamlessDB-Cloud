@@ -1,0 +1,39 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "enable-trace",
+            "hidden": false,
+            "description": "Enable trace",
+            "binaryDir": "/root/SeamlessDB-Cloud/out/build/enable-trace",
+            "cacheVariables": {
+                "ENABLE_TRACE": true,
+                "ENABLE_METRIC": true,
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "release",
+            "hidden": false,
+            "description": "release",
+            "binaryDir": "/root/SeamlessDB-Cloud/out/build/release",
+            "cacheVariables": {
+                "ENABLE_TRACE": false,
+                "ENABLE_METRIC": false,
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "debug",
+            "hidden": false,
+            "description": "debug",
+            "binaryDir": "/root/SeamlessDB-Cloud/out/build/debug",
+            "cacheVariables": {
+                "ENABLE_TRACE": false,
+                "ENABLE_METRIC": false,
+                "PRINT_LOG": true,
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ]
+}

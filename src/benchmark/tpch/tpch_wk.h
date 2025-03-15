@@ -25,8 +25,7 @@ public:
   int sf_; // scale factor
   int thread_num_ = -1;
 
-  // std::vector<Query5  *>      queries5;
-  // std::vector<Query10 *>      queries10;
+  // std::vector<Query5 *> queries5;
+  // std::vector<Query10 *> queries10;
   std::vector<QueryExample *> queries_example;
 };
-
