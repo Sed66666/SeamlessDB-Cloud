@@ -5,7 +5,7 @@
             "name": "enable-trace",
             "hidden": false,
             "description": "Enable trace",
-            "binaryDir": "/root/SeamlessDB-Cloud/out/build/enable-trace",
+            "binaryDir": "/root/SeamlessDB-Cloud/build/enable-trace",
             "cacheVariables": {
                 "ENABLE_TRACE": true,
                 "ENABLE_METRIC": true,
@@ -16,7 +16,7 @@
             "name": "release",
             "hidden": false,
             "description": "release",
-            "binaryDir": "/root/SeamlessDB-Cloud/out/build/release",
+            "binaryDir": "/root/SeamlessDB-Cloud/build/release",
             "cacheVariables": {
                 "ENABLE_TRACE": false,
                 "ENABLE_METRIC": false,
@@ -27,7 +27,7 @@
             "name": "debug",
             "hidden": false,
             "description": "debug",
-            "binaryDir": "/root/SeamlessDB-Cloud/out/build/debug",
+            "binaryDir": "/root/SeamlessDB-Cloud/build/debug",
             "cacheVariables": {
                 "ENABLE_TRACE": false,
                 "ENABLE_METRIC": false,

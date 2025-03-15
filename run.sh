@@ -1,10 +1,10 @@
 set -ex
 
 # ./killall.sh
-rm -rf out/build/release/db_tpcc
+rm -rf build/release/db_tpcc
 cmake --preset release
-cmake --build out/build/release --parallel 38 --
-cd out/build/release
+cmake --build build/release --parallel 38 --
+cd build/release
 ./bin/storage_pool &
 sleep 8
 ./bin/state_pool &

@@ -587,7 +587,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  std::string config_path = "../src/config/proxy_config.json";
+  std::string config_path = "../../src/config/proxy_config.json";
 
   cJSON *cjson = parse_json_file(config_path);
   cJSON *rw_node;

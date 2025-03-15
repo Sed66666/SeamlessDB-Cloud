@@ -1001,9 +1001,9 @@ int main(int argc, char **argv) {
   std::string config_path;
 
   if (strcmp(argv[1], "active") == 0) {
-    config_path = "../src/config/compute_server_config.json";
+    config_path = "../../src/config/compute_server_config.json";
   } else {
-    config_path = "../src/config/compute_back_config.json";
+    config_path = "../../src/config/compute_back_config.json";
     back_up_resumption_ = 1;
   }
 

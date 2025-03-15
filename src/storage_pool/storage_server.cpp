@@ -48,7 +48,7 @@ void load_data(std::string workload, int record_num, SmManager *sm_mgr,
 }
 
 int main(int argc, char *argv[]) {
-  std::string config_path = "../src/config/storage_server_config.json";
+  std::string config_path = "../../src/config/storage_server_config.json";
 
   cJSON *cjson = parse_json_file(config_path);
   cJSON *storage_node = cJSON_GetObjectItem(cjson, "storage_node");

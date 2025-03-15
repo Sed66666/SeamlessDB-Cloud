@@ -1,10 +1,10 @@
 set -ex
 
 # ./killall.sh
-rm -rf out/build/enable-trace/db_tpcc
+rm -rf build/enable-trace/db_tpcc
 cmake --preset enable-trace
-cmake --build out/build/enable-trace --parallel 38 --
-cd out/build/enable-trace
+cmake --build build/enable-trace --parallel 38 --
+cd build/enable-trace
 ./bin/storage_pool &
 sleep 8
 ./bin/state_pool &
