@@ -3,7 +3,7 @@
         "machine_id": 0,
         "local_rpc_port": 12191,
         "local_rdma_port": 12192,
-        "thread_num": 2,
+        "thread_num": 1,
         "workload": "tpcc",
         "cost_model": "SeamlessDB",
         "interval": 0,

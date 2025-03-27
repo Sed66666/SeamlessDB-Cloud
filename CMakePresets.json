@@ -8,7 +8,9 @@
             "binaryDir": "/root/SeamlessDB-Cloud/build/enable-trace",
             "cacheVariables": {
                 "ENABLE_TRACE": true,
+                "ENABLE_TRACE_DETAIL": true,
                 "ENABLE_METRIC": true,
+                "PRINT_LOG": false,
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
@@ -29,9 +31,10 @@
             "description": "debug",
             "binaryDir": "/root/SeamlessDB-Cloud/build/debug",
             "cacheVariables": {
-                "ENABLE_TRACE": false,
-                "ENABLE_METRIC": false,
-                "PRINT_LOG": true,
+                "ENABLE_TRACE": true,
+                "ENABLE_TRACE_DETAIL": true,
+                "ENABLE_METRIC": true,
+                "PRINT_LOG": false,
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         }

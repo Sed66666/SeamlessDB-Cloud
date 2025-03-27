@@ -1,9 +1,12 @@
 #include <chrono>
+#include <cstddef>
 #include <cstdio>
+#include <iostream>
 #include <memory>
 #include <netinet/in.h>
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
+#include <ostream>
 #include <pthread.h>
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -377,7 +380,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 #ifdef ENABLE_TRACE
   pthread_setname_np(pthread_self(), std::to_string(thread_id).c_str());
   trace_resource::ResourceAttributes attributes = {
-      {"service.name", "WOOKONG DB"}, {"thread.id", thread_id}};
+      {"service.name", "WookongDB"}, {"thread.id", thread_id}};
   auto resource = trace_resource::Resource::Create(attributes);
   auto exporter = trace_exporter::OtlpHttpExporterFactory::Create();
   auto option = trace_sdk::BatchSpanProcessorOptions();
@@ -390,7 +393,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
   // set the global trace provider
   trace_api::Provider::SetTracerProvider(provider);
   auto tracer =
-      trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
+      trace_api::Provider::GetTracerProvider()->GetTracer("Wookong-tracer");
 #endif
 
   yyscan_t scanner;
@@ -424,18 +427,25 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
                   op_state_manager, qp_mgr, data_send, &offset, rdma_allocated);
   context->rdma_buffer_allocator_ = rdma_buffer_allocator;
 
-#ifdef ENABLE_TRACE
-  opentelemetry::nostd::shared_ptr<Span> transaction_span;
-  opentelemetry::nostd::shared_ptr<Scope> transaction_scope;
+  while (true) {
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+    opentelemetry::nostd::shared_ptr<Span> read_span;
+    if (context->transaction_scope != nullptr) {
+      context->sql_span = tracer->StartSpan("SQL");
+      context->sql_scope = std::make_shared<Scope>(Scope(context->sql_span));
+      read_span = tracer->StartSpan("readdata");
+    }
 #endif
 
-  while (true) {
-    // std::cout << "Waiting for request..." << std::endl;
     memset(data_recv, 0, BUFFER_LENGTH);
-
     i_recvBytes = read(fd, data_recv, BUFFER_LENGTH);
 
-    // std::cout << "data_recv: " << data_recv << "\n";
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+    if (context->transaction_scope != nullptr) {
+      read_span->End();
+      context->sql_span->AddEvent("RECEIVE_SQL", {{"SQL", data_recv}});
+    }
+#endif
 
     if (i_recvBytes == 0) {
       std::cout << "Maybe the client has closed" << std::endl;
@@ -682,13 +692,13 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     bool is_begin = false;
     if (strcmp(data_recv, "begin;") == 0) {
       is_begin = true;
-      transaction_span = tracer->StartSpan("transaction");
-      transaction_scope = std::make_shared<Scope>(Scope(transaction_span));
+      context->transaction_span = tracer->StartSpan("transaction");
+      context->transaction_scope =
+          std::make_shared<Scope>(Scope(context->transaction_span));
+      context->sql_span = tracer->StartSpan("SQL");
+      context->sql_scope = std::make_shared<Scope>(Scope(context->sql_span));
+      context->sql_span->AddEvent("RECEIVE_SQL", {{"SQL", data_recv}});
     }
-
-    auto sql_span = tracer->StartSpan("SQL");
-    Scope sql_scope(sql_span);
-    sql_span->AddEvent("RECEIVE_SQL", {{"SQL", data_recv}});
 #endif
 
     memset(data_send, '\0', BUFFER_LENGTH);
@@ -704,6 +714,7 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
     // pthread_mutex_lock(node->buffer_mutex);
 
     YY_BUFFER_STATE buf = yy_scan_string(data_recv, scanner);
+
     if (yyparse(scanner) == 0) {
       if (ast::parse_tree != nullptr) {
         try {
@@ -712,34 +723,31 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
 #endif
 
           // analyze and rewrite
-
-          // #ifdef ENABLE_TRACE
-          //           auto analyze_span = tracer->StartSpan("analyze");
-          // #endif
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+          auto analyze_span = tracer->StartSpan("analyze");
+#endif
           std::shared_ptr<Query> query =
               node->analyze_->do_analyze(ast::parse_tree);
           yy_delete_buffer(buf, scanner);
           finish_analyze = true;
-          // #ifdef ENABLE_TRACE
-          //           analyze_span->End();
-          // #endif
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+          analyze_span->End();
+#endif
 
-          // 优化器
-
-          /*
-              设置planner的sql_id，并启动plan_query
-          */
-          // #ifdef ENABLE_TRACE
-          //           auto optimizer_span = tracer->StartSpan("optimizer");
-          // #endif
+          // 优化器，设置planner的sql_id，并启动plan_query
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+          auto optimizer_span = tracer->StartSpan("optimizer");
+#endif
           node->optimizer_->set_planner_sql_id(sql_id);
           std::shared_ptr<Plan> plan =
               node->optimizer_->plan_query(query, context);
 #ifdef ENABLE_TRACE
-          sql_span->SetAttribute("Type", node->sql_type_[plan->tag - 1]);
-          plan->format_collect("", sql_span);
-          // plan->format_collect("", optimizer_span);
-          // optimizer_span->End();
+          context->sql_span->SetAttribute("Type",
+                                          node->sql_type_[plan->tag - 1]);
+          // plan->format_collect("", context->sql_span);
+#ifdef ENABLE_TRACE_DETAIL
+          optimizer_span->End();
+#endif
 #endif
           // @STATE: write plan into state_node
           if (state_open_) {
@@ -747,28 +755,30 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
                                                         plan);
           }
 
-          // portal
-          // #ifdef ENABLE_TRACE
-          //           auto portal_span = tracer->StartSpan("portal");
-          // #endif
+// portal
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+          auto portal_span = tracer->StartSpan("portal");
+#endif
           std::shared_ptr<PortalStmt> portalStmt =
               node->portal_->start(plan, context);
           // if (portalStmt->root != nullptr)
           //   CompCkptManager::get_instance()->add_new_query_tree(
           //       portalStmt->root);
-          // #ifdef ENABLE_TRACE
-          //           portal_span->End();
-
-          //           auto exector_span = tracer->StartSpan("exector");
-          //           trace_api::Scope exector_scope(exector_span);
-          // #endif
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+          portal_span->End();
+          auto exector_span = tracer->StartSpan("exector");
+          trace_api::Scope exector_scope(exector_span);
+#endif
           node->portal_->run(portalStmt, node->ql_mgr_, context);
-          // #ifdef ENABLE_TRACE
-          //           sql_span->SetAttribute("total scan count",
-          //           context->count_); exector_span->End();
-          // #endif
+#if defined(ENABLE_TRACE) && defined(ENABLE_TRACE_DETAIL)
+          if (portalStmt->root) {
+            portalStmt->root->format_collect("", exector_span);
+            context->sql_span->SetAttribute("total scan count",
+                                            context->count_);
+          }
+          exector_span->End();
+#endif
           node->portal_->drop();
-
         } catch (TransactionAbortException &e) {
           // 事务需要回滚，需要把abort信息返回给客户端并写入output.txt文件中
           std::string str = "abort\n";
@@ -786,13 +796,13 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
           // std::cout << e.GetInfo() << std::endl;
           abort_txns[connection_id]++;
 #ifdef ENABLE_TRACE
-          transaction_span->SetStatus(
+          context->transaction_span->SetStatus(
               StatusCode::kError,
               node->abort_type_[static_cast<int>(e.GetAbortReason())]);
-          transaction_span->SetAttribute("conflict_transaction_id",
-                                         e.get_conflict_txn_id());
-          transaction_span->End();
-          transaction_scope = nullptr;
+          context->transaction_span->SetAttribute("conflict_transaction_id",
+                                                  e.get_conflict_txn_id());
+          context->transaction_span->End();
+          context->transaction_scope = nullptr;
 #endif
           // assert(0);
         } catch (RMDBError &e) {
@@ -835,17 +845,18 @@ void client_handler(int *sock_fd, RWNode *node, int thread_id) {
       // pthread_mutex_unlock(node->buffer_mutex);
     }
 #ifdef ENABLE_TRACE
-    sql_span->End();
+    context->sql_span->End();
+    context->sql_scope = nullptr;
     if (is_begin) {
-      transaction_span->SetAttribute("transaction_id",
-                                     context->txn_->get_transaction_id());
+      context->transaction_span->SetAttribute(
+          "transaction_id", context->txn_->get_transaction_id());
     }
 #endif
     if (strcmp(data_recv, "commit;") == 0) {
       commit_txns[connection_id]++;
 #ifdef ENABLE_TRACE
-      transaction_span->End();
-      transaction_scope = nullptr;
+      context->transaction_span->End();
+      context->transaction_scope = nullptr;
 #endif
     }
 
@@ -912,6 +923,7 @@ void RWNode::start_server() {
   server_start_time = std::chrono::high_resolution_clock::now();
 
   for (int i = 0; i < client_num; ++i) {
+    std::cout << "client_num" << client_num << std::endl;
     std::cout << "Waiting for new connection..." << std::endl;
     pthread_t thread_id;
     struct sockaddr_in s_addr_client{};
@@ -940,6 +952,7 @@ void RWNode::start_server() {
     threads.push_back(std::thread(client_handler, &sockfd, this, i));
   }
 
+  std::cout << "wait" << std::endl;
   for (auto &t : threads) {
     t.join();
   }

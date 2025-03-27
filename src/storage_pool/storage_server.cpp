@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
   // set the global trace provider
   trace_api::Provider::SetTracerProvider(tracer_provider);
   auto tracer =
-      trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
+      trace_api::Provider::GetTracerProvider()->GetTracer("Wookong-tracer");
 #endif
 
   auto disk_manager = std::make_shared<DiskManager>();

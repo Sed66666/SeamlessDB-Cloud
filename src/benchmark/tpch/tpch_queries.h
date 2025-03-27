@@ -10,8 +10,8 @@ public:
   void generate_new_txn() override {
 
     queries.push_back("begin;");
-    queries.push_back("select l_extendedprice, l_discount from lineitem where "
-                      "l_shipdate >= '1995-01-01';");
+    queries.push_back(
+        "select * from customer, orders where c_custkey=o_custkey;");
     queries.push_back("commit;");
 
     return;

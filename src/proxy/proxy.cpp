@@ -176,7 +176,7 @@ void run_client(BenchMark *benchmark, std::string remote_ip, int remote_port,
 
   auto ro_start = std::chrono::high_resolution_clock::now();
   // int cnt = TXN_NUM_PER_THREAD;
-  while (true) {
+  for (int i = 0; i < 1000; i++) {
     // std::cout << "client " << thread_index << " begin generate_txn " <<
     // TXN_NUM_PER_THREAD - cnt << "\n";
     txn = benchmark->generate_transaction(thread_index);

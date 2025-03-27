@@ -485,6 +485,7 @@ public:
     // << upper_rid_.slot_no << ", record_no" << upper_rid_.record_no << "}\n";
     auto &tab_cols_ = tab_.cols_;
     while (!scan_->is_end()) {
+      input_count_++;
       rid_ = scan_->rid();
       // auto [is_visible, rec] = mvcc_get_record(rid_);
       // 如果不可见
@@ -499,6 +500,7 @@ public:
 
       if (rec->is_deleted() == false &&
           eval_conds(tab_cols_, filter_conds_, rec.get())) {
+        output_count_++;
         if (node_type_ == 0 && min_lock_ == false) {
           lock = lock_mgr->request_record_lock(
               tab_.table_id_, rid_, txn, RECORD_LOCK_ORDINARY,
@@ -570,6 +572,7 @@ public:
     auto &tab_cols_ = tab_.cols_;
     for (scan_->next(); !scan_->is_end(); scan_->next()) {
       context_->count_++;
+      input_count_++;
       rid_ = scan_->rid();
       // auto [is_visible, rec] = mvcc_get_record(rid_);
       // 如果不可见
@@ -583,6 +586,7 @@ public:
 
       if (rec->is_deleted() == false &&
           eval_conds(tab_cols_, filter_conds_, rec.get())) {
+        output_count_++;
         if (node_type_ == 0) {
           assert(context_ != nullptr);
           lock = context_->lock_mgr_->request_record_lock(
@@ -785,4 +789,42 @@ public:
     return sizeof(Rid) * 3 + sizeof(bool) + sizeof(int) * 2 + sizeof(size_t) +
            sizeof(time_t) + sizeof(ExecutionType);
   }
+
+  void
+  format_collect(std::string prefix,
+                 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
+                     span) override {
+    std::string s1;
+    std::string s2;
+    std::string percentage_str;
+    if (input_count_ == 0) {
+      percentage_str = "100%";
+    } else {
+      percentage_str = std::to_string(100 - static_cast<double>(output_count_) /
+                                                input_count_ * 100);
+      percentage_str =
+          percentage_str.substr(0, percentage_str.find('.') + 2) + "%";
+    }
+    for (const auto &cond : filter_conds_) {
+      s2.append(cond.lhs_col.col_name).append(",");
+    }
+    // s2.resize(s2.size() - 2);
+    if (!is_seq_scan_) {
+      for (const auto &cond : index_conds_) {
+        s1.append(cond.lhs_col.col_name).append(", ");
+      }
+      // s1.resize(s1.size() - 2);
+      span->AddEvent(prefix + "索引扫描", {{"表名", tab_name_},
+                                           {"使用索引条件", s1},
+                                           {"普通条件", s2},
+                                           {"扫描行数", input_count_},
+                                           {"结果行数", output_count_}});
+    } else {
+      span->AddEvent(prefix + "顺序扫描", {{"筛选效率", percentage_str},
+                                           {"表名", tab_name_},
+                                           {"普通条件", s2},
+                                           {"扫描行数", input_count_},
+                                           {"结果行数", output_count_}});
+    }
+  };
 };

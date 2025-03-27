@@ -8,8 +8,6 @@
 
 #include "spdlog/sinks/basic_file_sink.h"
 
-#define PRINT_LOG 0
-
 class RwServerDebug {
 private:
   inline static RwServerDebug *instance = nullptr;

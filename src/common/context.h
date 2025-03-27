@@ -65,4 +65,12 @@ public:
   int state_slot_index_;
 
   int count_;
+
+  opentelemetry::nostd::shared_ptr<Span> span;
+#ifdef ENABLE_TRACE
+  opentelemetry::nostd::shared_ptr<Span> transaction_span;
+  opentelemetry::nostd::shared_ptr<Scope> transaction_scope;
+  opentelemetry::nostd::shared_ptr<Span> sql_span;
+  opentelemetry::nostd::shared_ptr<Scope> sql_scope;
+#endif
 };

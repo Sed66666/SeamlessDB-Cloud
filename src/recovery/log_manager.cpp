@@ -44,7 +44,7 @@ void LogManager::write_log_to_storage() {
 
 #ifdef ENABLE_TRACE
   auto tracer =
-      trace_api::Provider::GetTracerProvider()->GetTracer("WOOKONG-tracer");
+      trace_api::Provider::GetTracerProvider()->GetTracer("Wookong-tracer");
   memcpy(trace_parent_,
          tracer->GetCurrentSpan()->GetContext().trace_id().Id().data(), 16);
   memcpy(trace_parent_ + 16,
